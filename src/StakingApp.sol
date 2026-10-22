@@ -43,6 +43,10 @@ contract StakingApp is Ownable {
     }
     // external functions
 
+    /**
+     * @dev new staking
+     * @param amount_ amount tokens staking
+     */
     function new_staking(uint256 amount_) external {
         require(amount_ == fixedStakingAmount, "Incorrect amount");
         require(userBalance[msg.sender] == 0, "Staking limit exceeded");
@@ -53,6 +57,9 @@ contract StakingApp is Ownable {
         emit new_stake_(msg.sender, amount_);
     }
 
+    /**
+     * @dev withraw tokens of staking
+     */
     function withrawTokens() external {
         require(userBalance[msg.sender] > 0, "Insuficient Balance");
         require((block.timestamp - depositTime[msg.sender]) > stakingPeriod, "unfinished period");
@@ -65,6 +72,9 @@ contract StakingApp is Ownable {
         emit witrawTokens_(msg.sender, amountWithraw);
     }
 
+    /**
+     * @dev claim rewards
+     */
     function claimRewards() external {
         require((block.timestamp - depositTime[msg.sender]) > stakingPeriod, "Time not ending");
         require(!rewardsHasClaim[msg.sender], "rewards has claim");
@@ -77,18 +87,29 @@ contract StakingApp is Ownable {
         emit claimRewards_(msg.sender, rewards);
     }
 
+    /**
+     * @dev set staking amount allow
+     * @param new staking amount
+     */
     function setStakingAmount(uint256 newStakingAmount_) external onlyOwner {
         fixedStakingAmount = newStakingAmount_;
 
         emit setStakingAmount_(msg.sender, newStakingAmount_);
     }
 
+    /**
+     * @dev set staking period
+     * @param newStakingPeriod_ new staking period
+     */
     function setStakingPeriod(uint256 newStakingPeriod_) external onlyOwner {
         stakingPeriod = newStakingPeriod_;
 
         emit setStakingPeriod_(msg.sender, newStakingPeriod_);
     }
 
+    /**
+     * @dev deposit ETH to pay rewards 
+     */
     receive() external payable {
         emit addFoundsForRewards_(msg.sender, msg.value);
     }
