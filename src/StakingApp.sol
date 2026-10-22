@@ -41,6 +41,7 @@ contract StakingApp is Ownable {
         fixedStakingAmount = fixedStakingAmount_;
         rewards = rewards_;
     }
+
     // external functions
 
     /**
@@ -108,7 +109,7 @@ contract StakingApp is Ownable {
     }
 
     /**
-     * @dev deposit ETH to pay rewards 
+     * @dev deposit ETH to pay rewards
      */
     receive() external payable {
         emit addFoundsForRewards_(msg.sender, msg.value);
