@@ -90,7 +90,7 @@ contract StakingApp is Ownable {
 
     /**
      * @dev set staking amount allow
-     * @param new staking amount
+     * @param newStakingAmount_ staking amount
      */
     function setStakingAmount(uint256 newStakingAmount_) external onlyOwner {
         fixedStakingAmount = newStakingAmount_;
